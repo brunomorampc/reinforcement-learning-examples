@@ -30,7 +30,8 @@ def next_state(state, action):
     return np.where(state == 0, state + action, state)
 
 # --- Initialise value function and model ---
-
+# This initialises the value for all possible states (i.e. all possible configuration of the board).
+# Winning position will take the value of 1, losing position 0, draw and non-finished positions will take the value of 0.
 state_value_map = {}
 for state in states:
     state_value_map[state_key(state)] = float(reward_function(state))
@@ -38,6 +39,7 @@ for state in states:
 model = Model("tictacboard")
 
 def get_moves(state):
+    # Gets the list of available moves for a given state
     model.state = state.copy()
     model.state_history = [state.copy()]
     model.move = 0
@@ -45,7 +47,8 @@ def get_moves(state):
     return model.available_moves()
 
 # --- Initialise policy: X states only, pick first available move ---
-
+# Initialise the policy. This is like the initialization of the optimal sequence in a classic open-loop optimization or
+# MPC problem.
 policy = {}
 for state in states:
     if reward_function(state) != 0:
@@ -68,6 +71,7 @@ while True:
     error = float("inf")
     eval_sweep = 0
     while error > toll:
+        # Find the value of all the states for the fixed policy.
         error = 0
         eval_sweep += 1
         for state in states:
