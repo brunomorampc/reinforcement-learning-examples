@@ -4,7 +4,7 @@ import numpy as np
 from tictactoe.model import Model
 from tictactoe.reward_function import reward_function
 
-with open("tictactoe/value_function.pkl", "rb") as f:
+with open("tictactoe/value_function_pi.pkl", "rb") as f:
     value_function = pickle.load(f)
 
 SYMBOLS = {0: " ", 1: "X", -1: "O"}
